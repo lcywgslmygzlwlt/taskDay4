@@ -1,10 +1,10 @@
 <template>
-  <div >
+  <div>
     <div v-for="(item, index) in arr" :key="index">
       <input type="checkbox" v-model="checkNumArr" :value="item" />
-      <span>{{item}}</span>
+      <span>{{ item }}</span>
     </div>
-    <p>你选中的元素,累加的值为和:{{theSum}}</p>
+    <p>你选中的元素,累加的值为和:{{ theSum }}</p>
   </div>
 </template>
 
@@ -13,16 +13,16 @@ export default {
   data() {
     return {
       arr: [9, 15, 19, 25, 29, 31, 48, 57, 62, 79, 87],
-      checkNumArr:[]
+      checkNumArr: [],
     }
   },
-  computed:{
-    theSum(){
-      return this.checkNumArr.reduce((sum,val)=>{
-        return (sum+=val)
-      },0)
-    }
-  }
+  computed: {
+    theSum() {
+      return this.checkNumArr.reduce((sum, val) => {
+        return (sum += val)
+      }, 0)
+    },
+  },
 }
 </script>
 
