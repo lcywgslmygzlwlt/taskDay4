@@ -130,11 +130,14 @@ export default {
     },
   },
   computed: {
+    //   总价
     allPrice() {
       return this.list
         .reduce((sum, next) => (sum += +next.price), 0)
         .toFixed(0);
     },
+    //   均价
+
     avgPrice() {
       return (this.allPrice / this.list.length).toFixed(0);
     },
