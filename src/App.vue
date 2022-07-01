@@ -1,14 +1,29 @@
 <template>
   <div>
-    <span>全选:</span>
-    <input type="checkbox" v-model="isAll"/>
-    <button @click.prevent="un">反选</button>
+    <p>请选择你要购买的书籍</p>
     <ul>
       <li v-for="(item,index) in arr" :key="index">
-        <input type="checkbox" v-model="item.c"/>
-        <span>{{item.name}}</span>
+      {{item.name}}
+      <button @click.prevent="buy(item.name)">买书</button>
       </li>
     </ul>
+    <table border="1" width="500" cellspacing="0">
+      <tr>
+        <th>序号</th>
+        <th>书名</th>
+        <th>单价</th>
+        <th>数量</th>
+        <th>合计</th>
+      </tr>
+        <tr v-for="(item,index) in arr" :key="index">
+        <th>{{index+1}}</th>
+        <th>{{item.name}}</th>
+        <th>{{item.price}}</th>
+        <th>{{item.count}}</th>
+        <th>{{item.count * item.price}}</th>
+      </tr>
+    </table>
+    <p>总价格为:{{allPrice}} </p>
   </div>
 </template>
 
@@ -18,38 +33,39 @@ export default {
     return {
       arr: [
         {
-          name: "猪八戒",
-          c: false,
+          name: "水浒传",
+          price: 107,
+          count: 0,
         },
         {
-          name: "孙悟空",
-          c: false,
+          name: "西游记",
+          price: 192,
+          count: 0,
         },
         {
-          name: "唐僧",
-          c: false,
+          name: "三国演义",
+          price: 219,
+          count: 0,
         },
         {
-          name: "白龙马",
-          c: false,
+          name: "红楼梦",
+          price: 178,
+          count: 0,
         },
       ],
-      // isAll:false,
     };
   },
-  computed:{
-    isAll:{
-      set(val){
-        this.arr.forEach((ele)=>(ele.c = val))
-      },
-      get(){
-       return this.arr.every((ele)=>(ele.c == true))
-      }
+  methods:{
+    buy(val){
+     const index= this.arr.findIndex(obj=>obj.name==val)
+      this.arr[index].count++
     }
   },
-  methods: {
-    un(){
-       this.arr.forEach((ele)=>(ele.c = !ele.c))
+  computed:{
+    allPrice(){
+     return this.arr.reduce((sum,next)=>{
+        return sum + next.count * next.price
+      },0)
     }
   }
 };
