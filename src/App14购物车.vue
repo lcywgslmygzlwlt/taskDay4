@@ -11,7 +11,7 @@
       </tr>
       <!-- 循环渲染的元素tr -->
       <tr v-for="item in list" :key="item.id">
-        <td><input type="checkbox" v-model="item.a" />{{ item.id }}</td>
+        <td><input type="checkbox" v-model="item.c" />{{ item.id }}</td>
         <td>{{ item.name }}</td>
         <td>{{ item.price }}</td>
         <td>
@@ -24,11 +24,12 @@
             style="text-align: center"
             type="text"
             v-model.number="item.num"
+            :value="aaaa"
           />
           <button @click.prevent="+item.num++">+</button>
         </td>
         <td>{{ item.price * item.num }}</td>
-        <td><button @click.prevent="del(item.id)">删除</button></td>
+        <td><button @click="del(item.id)">删除</button></td>
       </tr>
 
       <tr v-if="list.length === 0">
@@ -36,13 +37,13 @@
       </tr>
     </table>
     <br />
-    <button @click="btnDele">删除选中商品</button>
-    <button @click="empty">清理购物车</button>
+    <button @click="clearNum">删除选中商品</button>
+    <button @click="clearAll">清理购物车</button>
     <br />
     <div style="margin-top: 20px">
       <h2>统计</h2>
-      <p>已经选中商品件数: {{ sumCommodity }}</p>
-      <p>总价:{{ sumPrice }}</p>
+      <p>已经选中商品件数:{{ allNum }}</p>
+      <p>总价:{{ allPrice }}</p>
     </div>
   </div>
 </template>
@@ -52,33 +53,12 @@ export default {
   data() {
     return {
       list: [
-        {
-          id: 1,
-          name: '奔驰',
-          time: '2020-08-01',
-          price: 100,
-          a: false,
-          num: 0,
-        },
-        {
-          id: 2,
-          name: '宝马',
-          time: '2020-08-02',
-          price: 200,
-          a: false,
-          num: 0,
-        },
-        {
-          id: 3,
-          name: '奥迪',
-          time: '2020-08-03',
-          price: 300,
-          a: false,
-          num: 0,
-        },
+        { id: 1, name: '奔驰', price: 3000, num: 0, c: false },
+        { id: 2, name: '宝马', price: 2000, num: 0, c: false },
+        { id: 3, name: '奥迪', price: 1000, num: 0, c: false },
       ],
-      // choice:"",
-      // sumCommodity:0
+      allNum: 0,
+      allPrice: 0,
     };
   },
   methods: {
@@ -87,50 +67,38 @@ export default {
       const index = this.list.forEach((obj) => obj.id == id);
       this.list.splice(index, 1);
     },
-    // 删除选中商品
-    btnDele() {
+    clearNum() {
       this.list = this.list.filter((item) => {
-        return !item.a;
+        return !item.c;
       });
     },
-    // 清理购物车
-    empty() {
+    clearAll() {
       this.list = this.list.filter((item) => {
         return item.id > 999;
       });
     },
-    // sumCommodity(){
-    //   return this.list.filter(item => item.a == true).reduce((t,item)=>(t+=item),0)
-    // }
   },
   computed: {
     isAll: {
       set(val) {
-        this.list.forEach((obj) => (obj.a = val));
+        this.list.forEach((ele) => (ele.c = val));
       },
       get() {
         return this.list.length === 0
           ? false
-          : this.list.every((ele) => ele.a == true);
-        //  return this.list.every((ele)=>(ele.a == true))
+          : this.list.every((ele) => ele.c == true);
+      },
+      allNum() {
+        return this.list
+          .filter((item) => item.c == true)
+          .reduce((t, item) => (t += item.num), 0);
+      },
+      allPrice() {
+        return this.list
+          .filter((item) => item.c == true)
+          .reduce((total, item) => (total += item.num * item.price), 0);
       },
     },
-    sumCommodity() {
-      return this.list
-        .filter((item) => item.a == true)
-        .reduce((t, item) => (t += +item.num), 0);
-    },
-    sumPrice() {
-      return this.list
-        .filter((item) => item.a == true)
-        .reduce((total, item) => (total += item.price * item.num), 0);
-    },
-    // add(index){
-    //   this.list[index].num++
-    // },
-    // sub(){
-    //   this.list[index].num--
-    // }
   },
 };
 </script>
