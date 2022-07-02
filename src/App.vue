@@ -1,28 +1,40 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div>
+    <h2>国内网站：粉丝数量：{{ num | kiss }}</h2>
+
+    <h2>外内网站：粉丝数量：{{ num | kiss1 }}</h2>
+
+    <h3>时间：{{ time1 | kiss3 }}</h3>
+
+    <h3>时间：{{ time1 | kiss4 }}</h3>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import moment from 'moment';
+// import moment from 'moment';
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-}
+  data() {
+    return {
+      num: 1876986,
+      time1: 1636450540055,
+    };
+  },
+  filters: {
+    kiss(val) {
+      return moment(val) / 10000 + '万';
+    },
+    kiss1(val) {
+      return moment(val) / 1000 + '千';
+    },
+    kiss3(val) {
+      return moment(val).format('yyyy-MM-DD');
+    },
+    kiss4(val) {
+      return moment(val).format('yyyy/MM/DD');
+    },
+  },
+};
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
+<style></style>
