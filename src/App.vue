@@ -1,28 +1,36 @@
 <template>
-  <div >
-    <div v-for="(item, index) in arr" :key="index">
-      <input type="checkbox" v-model="checkNumArr" :value="item" />
-      <span>{{item}}</span>
-    </div>
-    <p>你选中的元素,累加的值为和:{{theSum}}</p>
+  <div>
+    <h2>国内网站：粉丝数量：{{ time | timeFmtTime }}</h2>
+
+    <h2>外内网站：粉丝数量：{{ time | time1FmtTime }}</h2>
+
+    <h3>时间：{{ time1 | time2FmtTime('-') }}</h3>
+
+    <h3>时间：{{ time1 | time2FmtTime('/') }}</h3>
   </div>
 </template>
 
 <script>
+import moment from 'moment'
 export default {
   data() {
     return {
-      arr: [9, 15, 19, 25, 29, 31, 48, 57, 62, 79, 87],
-      checkNumArr:[]
+      time: 1876986,
+      time1: 1636450540055,
     }
   },
-  computed:{
-    theSum(){
-      return this.checkNumArr.reduce((sum,val)=>{
-        return (sum+=val)
-      },0)
-    }
-  }
+  filters: {
+    timeFmtTime(val) {
+      return moment(val) / 1000 + '万'
+    },
+    time1FmtTime(val) {
+      return moment(val) / 1000 + '千'
+    },
+  beijingTime(val, arg1) {
+    const date = new Date(val)
+    return moment(date).format('YYYY-MM-DD').replace(/\D/g, arg1)
+  },
+  },
 }
 </script>
 
