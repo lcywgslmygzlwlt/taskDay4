@@ -14,9 +14,9 @@
         <td><input type="checkbox" v-model="item.a" />{{item.id}}</td>
         <td>{{item.name}}</td>
         <td>{{item.price}}</td>
-        <td><button @click.prevent="+item.num <=0 ? item.num =0 : +item.num--">-</button>
-        <input style="text-align:center" type="text" v-model.number="item.num" :value="aaaa" />
-        <button @click.prevent="+item.num++">+</button></td>
+        <td><button @click.prevent="item.num <=0 ? item.num =0 : item.num--">-</button>
+        <input style="text-align:center" type="text" v-model="item.num"/>
+        <button @click.prevent="item.num++">+</button></td>
         <td>{{item.price * item.num}}</td>
         <td><button @click.prevent="del(item.id)">删除</button></td>
       </tr>
@@ -83,7 +83,7 @@ export default {
       }
       }, 
       sumCommodity() {
-           return this.list.filter(item => item.a == true).reduce((t,item)=>(t+=+item.num),0)
+           return this.list.filter(item => item.a == true).reduce((t,item)=>(t= t+item.num),0)
         },
       sumPrice(){
           return this.list.filter(item => item.a == true).reduce((total,item) => total+=item.price*item.num,0)
