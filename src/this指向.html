@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        function fn() {
+            console.log(this);//window 全局下声明函数 是挂载在window上的 this指向window
+        }
+        const obj = {
+            name: "test",
+            a() {
+                console.log(this.a); //a()  谁调用指向谁 obj调用指向obj 打印obj的a属性
+                setTimeout(function () {
+                    console.log(this.a);//undefined  setTimeout是挂载在window上的 所有this指向window this.a 在window上没有a这个属性 所以undefined
+                }, 1000);
+            },
+            b() {
+                console.log(this); //obj 谁调用指向谁，全局下obj调用b，this指向obj对象
+                fn();
+            },
+        };
+        obj.a();
+        obj.b();
+    </script>
+</body>
+
+</html>
