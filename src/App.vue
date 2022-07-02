@@ -15,7 +15,7 @@
         <td>{{item.name}}</td>
         <td>{{item.price}}</td>
         <td><button @click="item.num <=0 ? item.num =0 : item.num-=1">-</button>
-        <input style="text-align:center" type="text" v-model="item.num" />
+        <input style="text-align:center" type="text" v-model="item.num"/>
         <button @click="item.num+=1">+</button></td>
         <td>{{item.price * item.num}}</td>
         <td><button @click="del(item.id)">删除</button></td>
