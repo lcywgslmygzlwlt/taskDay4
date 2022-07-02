@@ -1,0 +1,58 @@
+<template>
+  <div>
+    <span>全选:</span>
+    <input type="checkbox" v-model="isAll" />
+    <!-- 4. v-model 关联全选 - 选中状态 -->
+    <button @click="btn">反选</button>
+    <ul>
+      <li v-for="(item, index) in arr" :key="index">
+        <!-- 3. 对象.c - 关联 选中状态 -->
+        <input type="checkbox" v-model="item.c" />
+        <span>{{ item.name }}</span>
+      </li>
+    </ul>
+  </div>
+</template>
+
+<script>
+// 目标: 小选框 -> 全选
+// 1. 标签+样式+js准备好
+// 2. 把数据循环展示到页面上
+export default {
+  data() {
+    return {
+      arr: [
+        {
+          name: '猪八戒',
+          c: false,
+        },
+        {
+          name: '孙悟空',
+          c: false,
+        },
+        {
+          name: '唐僧',
+          c: false,
+        },
+        {
+          name: '白龙马',
+          c: false,
+        },
+      ],
+    }
+  },
+  // 5.计算属性-isAll
+  computed: {
+    isAll() {
+      // / 6. 统计小选框状态 ->  全选状态
+      // every口诀: 查找数组里"不符合"条件, 直接原地返回false
+      return this.arr.every((item) => item.c === true)
+    },
+  },
+  methods: {
+    btn() {
+      this.arr.forEach((ele) => (ele.c = !ele.c))
+    },
+  },
+}
+</script>
