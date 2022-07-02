@@ -1,15 +1,9 @@
 <template>
-     
     <div>
-         
       <h2>国内网站：粉丝数量：{{ num | change("home") }}</h2>
-         
       <h2>外内网站：粉丝数量：{{ num | change("abroad") }}</h2>
-         
-      <h3>时间：{{ time1 | beijingTime("-") }}</h3>
-         
-      <h3>时间：{{ time1 | beijingTime("/") }}</h3>
-       
+      <h3>时间：{{ time1 | time2("-") }}</h3>
+      <h3>时间：{{ time1 | time2("/") }}</h3>
     </div>
 </template>
 
@@ -30,7 +24,7 @@ export default {
         return val / 1000 + "千";
       }
     },
-    beijingTime(val, arg1) {
+    time2(val, arg1) {
       const date = new Date(val);
       return moment(date).format("YYYY-MM-DD").replace(/\D/g, arg1);
     },
