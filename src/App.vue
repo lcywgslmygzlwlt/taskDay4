@@ -97,11 +97,11 @@ export default {
       handler(newVal) {
         newVal.forEach((item) => {
           if (item.num < 0) {
-            alert('不能输入负值！');
+            alert('不能输入负值!');
             item.num = 0;
           }
         });
-        // console.log(newVal);
+        console.log(newVal);
       },
       deep: true,
       // immediate: true,
